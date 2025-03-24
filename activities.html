@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Learning Activities</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .activity-progress {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            background: #eee;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .activity-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .activity-card:hover {
+            transform: translateY(-5px);
+        }
+        .activity-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .activity-number {
+            width: 40px;
+            height: 40px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .shape-input {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .check-button:hover {
+            background: #45a049;
+        }
+        .result-message {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .wrong {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .shape-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .shape-option {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .shape-option:hover {
+            background: #f0f0f0;
+        }
+        .shape-pattern {
+            display: flex;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        .pattern-shape {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #4CAF50;
+        }
+        .drawing-canvas {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Shape Learning</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="learn.html">Learn</a>
+                <a href="activities.html" class="active">Activities</a>
+                <a href="authors.html">Authors</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <h1>Shape Learning Activities</h1>
+            <p>Complete all 10 activities to master shapes!</p>
+        </section>
+
+        <div class="activity-progress">
+            <h3>Your Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <p>Completed: <span id="completedCount">0</span>/10 activities</p>
+        </div>
+
+        <div class="activity-grid">
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">1</div>
+                    <h3>Shape Identification</h3>
+                </div>
+                <p>Click on the correct shape when its name appears:</p>
+                <div id="shape-display" class="shapes-container"></div>
+                <p id="shape-question">Find the: <span id="target-shape">Circle</span></p>
+                <p class="result-message" id="result1"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">2</div>
+                    <h3>Count the Sides</h3>
+                </div>
+                <p>How many sides does each shape have?</p>
+                <div class="shape square"></div>
+                <input type="number" class="shape-input" min="0" max="10" id="sidesInput">
+                <button class="check-button" onclick="checkSides(4)">Check Answer</button>
+                <p class="result-message" id="result2"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">3</div>
+                    <h3>Shape Properties</h3>
+                </div>
+                <p>Match the property with the correct shape:</p>
+                <select class="shape-input" id="propertySelect">
+                    <option value="">Select a property...</option>
+                    <option value="circle">No corners, perfectly round</option>
+                    <option value="square">4 equal sides and angles</option>
+                    <option value="triangle">3 sides and angles</option>
+                </select>
+                <button class="check-button" onclick="checkProperty()">Check Answer</button>
+                <p class="result-message" id="result3"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">4</div>
+                    <h3>Real World Shapes</h3>
+                </div>
+                <p>Match these objects with their shapes:</p>
+                <div class="matching-pairs">
+                    <div class="match-item">
+                        <p>Clock ➜</p>
+                        <select class="shape-input" onchange="checkMatch(this, 'circle')">
+                            <option value="">Choose shape...</option>
+                            <option value="circle">Circle</option>
+                            <option value="square">Square</option>
+                            <option value="triangle">Triangle</option>
+                        </select>
+                    </div>
+                    <div class="match-item">
+                        <p>Pizza Slice ➜</p>
+                        <select class="shape-input" onchange="checkMatch(this, 'triangle')">
+                            <option value="">Choose shape...</option>
+                            <option value="circle">Circle</option>
+                            <option value="square">Square</option>
+                            <option value="triangle">Triangle</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="result-message" id="result4"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">5</div>
+                    <h3>Shape Drawing Challenge</h3>
+                </div>
+                <p>Practice drawing shapes in order:</p>
+                <div class="drawing-sequence">
+                    <div class="shape circle"></div>
+                    <div class="shape square"></div>
+                    <div class="shape triangle"></div>
+                </div>
+                <button class="check-button" onclick="completeDrawing()">Mark as Complete</button>
+                <p class="result-message" id="result5"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">6</div>
+                    <h3>Shape Pattern Recognition</h3>
+                </div>
+                <p>What comes next in the pattern?</p>
+                <div class="shape-pattern">
+                    <div class="shape circle"></div>
+                    <div class="shape square"></div>
+                    <div class="shape circle"></div>
+                    <div class="shape square"></div>
+                    <div class="shape">?</div>
+                </div>
+                <select class="shape-input" onchange="checkPattern(this)">
+                    <option value="">Select next shape...</option>
+                    <option value="circle">Circle</option>
+                    <option value="square">Square</option>
+                    <option value="triangle">Triangle</option>
+                </select>
+                <p class="result-message" id="result6"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">7</div>
+                    <h3>Shape Angles Counter</h3>
+                </div>
+                <p>How many angles does this shape have?</p>
+                <div class="shape pentagon"></div>
+                <input type="number" class="shape-input" min="0" max="10" id="angleInput">
+                <button class="check-button" onclick="checkAngles(5)">Check Answer</button>
+                <p class="result-message" id="result7"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">8</div>
+                    <h3>Shape Symmetry</h3>
+                </div>
+                <p>How many lines of symmetry does this shape have?</p>
+                <div class="shape-grid">
+                    <div class="shape square"></div>
+                    <input type="number" class="shape-input" min="0" max="10" id="symmetryInput">
+                </div>
+                <button class="check-button" onclick="checkSymmetry(4)">Check Answer</button>
+                <p class="result-message" id="result8"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">9</div>
+                    <h3>Shape Composition</h3>
+                </div>
+                <p>Which shapes make up this compound shape?</p>
+                <div class="shape-composition">
+                    <svg width="150" height="150" viewBox="0 0 150 150">
+                        <rect x="25" y="25" width="100" height="100" fill="#99FF99"/>
+                        <polygon points="75,25 125,125 25,125" fill="#9999FF"/>
+                    </svg>
+                </div>
+                <div class="shape-options">
+                    <label><input type="checkbox" value="square"> Square</label>
+                    <label><input type="checkbox" value="triangle"> Triangle</label>
+                    <label><input type="checkbox" value="circle"> Circle</label>
+                </div>
+                <button class="check-button" onclick="checkComposition(['square','triangle'])">Check Answer</button>
+                <p class="result-message" id="result9"></p>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-number">10</div>
+                    <h3>3D Shape Recognition</h3>
+                </div>
+                <p>What 3D shape is formed when a square is extended upward?</p>
+                <div class="shape square"></div>
+                <select class="shape-input" onchange="check3DShape(this)">
+                    <option value="">Select 3D shape...</option>
+                    <option value="cube">Cube</option>
+                    <option value="sphere">Sphere</option>
+                    <option value="cylinder">Cylinder</option>
+                    <option value="cone">Cone</option>
+                </select>
+                <p class="result-message" id="result10"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p> 2025 Shape Learning Adventure</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Track completed activities
+        let completedActivities = new Set();
+        const totalActivities = 10;
+
+        // Update progress bar
+        function updateProgress(activityNumber) {
+            if (!completedActivities.has(activityNumber)) {
+                completedActivities.add(activityNumber);
+                const progress = (completedActivities.size / totalActivities) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('completedCount').textContent = completedActivities.size;
+            }
+        }
+
+        // Shape Identification Activity
+        const shapes = ['circle', 'square', 'triangle', 'rectangle', 'pentagon'];
+        const shapeDisplay = document.getElementById('shape-display');
+        
+        shapes.forEach(shape => {
+            const shapeDiv = document.createElement('div');
+            shapeDiv.className = `shape ${shape}`;
+            shapeDiv.onclick = () => checkShape(shape);
+            shapeDisplay.appendChild(shapeDiv);
+        });
+
+        function checkShape(selectedShape) {
+            const targetShape = document.getElementById('target-shape').textContent.toLowerCase();
+            const result = document.getElementById('result1');
+            
+            if (selectedShape === targetShape) {
+                result.textContent = 'Correct! Well done! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(1);
+            } else {
+                result.textContent = 'Try again! ';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Count Sides Activity
+        function checkSides(correctSides) {
+            const input = document.getElementById('sidesInput');
+            const result = document.getElementById('result2');
+            
+            if (parseInt(input.value) === correctSides) {
+                result.textContent = 'Correct! Great job! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(2);
+            } else {
+                result.textContent = 'Try again! Count carefully ';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Shape Properties Activity
+        function checkProperty() {
+            const select = document.getElementById('propertySelect');
+            const result = document.getElementById('result3');
+            
+            if (select.value !== '') {
+                result.textContent = 'Great job matching properties! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(3);
+            }
+        }
+
+        // Real World Shapes Activity
+        function checkMatch(select, correctShape) {
+            const result = document.getElementById('result4');
+            
+            if (select.value === correctShape) {
+                result.textContent = 'Correct match! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(4);
+            } else if (select.value !== '') {
+                result.textContent = 'Try another shape! ';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Drawing Challenge Activity
+        function completeDrawing() {
+            const result = document.getElementById('result5');
+            result.textContent = 'Great job practicing your shapes! ';
+            result.className = 'result-message correct';
+            result.style.display = 'block';
+            updateProgress(5);
+        }
+
+        // Shape Pattern Recognition Activity
+        function checkPattern(select) {
+            const result = document.getElementById('result6');
+            if (select.value === 'circle') {
+                result.textContent = 'Correct! You found the pattern! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(6);
+            } else if (select.value !== '') {
+                result.textContent = 'Try again! Look at how the pattern repeats.';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Shape Angles Counter Activity
+        function checkAngles(correctAngles) {
+            const input = document.getElementById('angleInput');
+            const result = document.getElementById('result7');
+            if (parseInt(input.value) === correctAngles) {
+                result.textContent = 'Correct! This shape has ' + correctAngles + ' angles! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(7);
+            } else {
+                result.textContent = 'Try again! Count each corner of the shape.';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Shape Symmetry Activity
+        function checkSymmetry(correctLines) {
+            const input = document.getElementById('symmetryInput');
+            const result = document.getElementById('result8');
+            if (parseInt(input.value) === correctLines) {
+                result.textContent = 'Correct! A square has ' + correctLines + ' lines of symmetry! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(8);
+            } else {
+                result.textContent = 'Try again! Think about all the ways you can fold the shape in half.';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Shape Composition Activity
+        function checkComposition(correctShapes) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selected = Array.from(checkboxes).map(cb => cb.value);
+            const result = document.getElementById('result9');
+            
+            if (selected.length === correctShapes.length && 
+                selected.every(shape => correctShapes.includes(shape))) {
+                result.textContent = 'Correct! You identified all the shapes! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(9);
+            } else {
+                result.textContent = 'Try again! Look carefully at the compound shape.';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // 3D Shape Recognition Activity
+        function check3DShape(select) {
+            const result = document.getElementById('result10');
+            if (select.value === 'cube') {
+                result.textContent = 'Correct! A square extended upward forms a cube! ';
+                result.className = 'result-message correct';
+                result.style.display = 'block';
+                updateProgress(10);
+            } else if (select.value !== '') {
+                result.textContent = 'Try again! Think about what shape you get when you extend a square up.';
+                result.className = 'result-message wrong';
+                result.style.display = 'block';
+            }
+        }
+
+        // Initialize with random shape
+        document.getElementById('target-shape').textContent = shapes[Math.floor(Math.random() * shapes.length)];
+    </script>
+</body>
+</html>

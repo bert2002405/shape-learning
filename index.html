@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Learning Adventure</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            outline: none;
+            border-radius: 25px;
+        }
+
+        .search-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-button:hover {
+            background: #45a049;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 0.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item:hover {
+            background: #f5f5f5;
+        }
+
+        .result-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .result-content {
+            flex: 1;
+        }
+
+        .result-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-category {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #f9f9f9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #45a049;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Shape Learning</a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="learn.html">Learn</a>
+                <a href="activities.html">Activities</a>
+                <a href="authors.html">Authors</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1 class="hero-title">Welcome to Shape Learning Adventure!</h1>
+        <p class="hero-subtitle">Discover the fascinating world of shapes through interactive learning</p>
+        
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for shapes, activities, or lessons..." id="searchInput" oninput="performSearch()">
+                <button class="search-button" onclick="performSearch()">Search</button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Learn Shapes</h3>
+            <p class="feature-description">Explore basic and advanced shapes through interactive lessons. Perfect for beginners!</p>
+            <a href="learn.html" class="cta-button">Start Learning</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3 class="feature-title">Fun Activities</h3>
+            <p class="feature-description">Practice with 10 engaging activities. Track your progress and earn achievements!</p>
+            <a href="activities.html" class="cta-button">Try Activities</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🌟</div>
+            <h3 class="feature-title">Track Progress</h3>
+            <p class="feature-description">Monitor your learning journey and see how far you've come!</p>
+            <a href="activities.html" class="cta-button">View Progress</a>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Start Your Shape Learning Journey?</h2>
+        <p>Join thousands of students who are mastering shapes the fun way!</p>
+        <a href="learn.html" class="cta-button">Get Started Now</a>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p> 2025 Shape Learning Adventure</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const searchableContent = {
+            shapes: [
+                { title: 'Circle', description: 'A round shape with no corners', icon: '⭕', link: 'learn.html#circle' },
+                { title: 'Square', description: 'A shape with 4 equal sides', icon: '⬛', link: 'learn.html#square' },
+                { title: 'Triangle', description: 'A shape with 3 sides', icon: '△', link: 'learn.html#triangle' },
+                { title: 'Rectangle', description: 'A shape with 4 sides and 2 pairs of equal sides', icon: '▭', link: 'learn.html#rectangle' },
+                { title: 'Pentagon', description: 'A shape with 5 sides', icon: '⬠', link: 'learn.html#pentagon' }
+            ],
+            activities: [
+                { title: 'Shape Identification', description: 'Learn to identify different shapes', icon: '🎯', link: 'activities.html#activity1' },
+                { title: 'Count the Sides', description: 'Practice counting sides of shapes', icon: '🔢', link: 'activities.html#activity2' },
+                { title: 'Shape Properties', description: 'Learn about shape properties', icon: '📐', link: 'activities.html#activity3' },
+                { title: 'Real World Shapes', description: 'Find shapes in everyday objects', icon: '🏠', link: 'activities.html#activity4' },
+                { title: 'Drawing Practice', description: 'Practice drawing shapes', icon: '✏️', link: 'activities.html#activity5' },
+                { title: 'Pattern Recognition', description: 'Find patterns in shapes', icon: '🔄', link: 'activities.html#activity6' },
+                { title: 'Angles Counter', description: 'Count angles in shapes', icon: '📏', link: 'activities.html#activity7' },
+                { title: 'Shape Symmetry', description: 'Learn about shape symmetry', icon: '🔄', link: 'activities.html#activity8' },
+                { title: 'Shape Composition', description: 'Create complex shapes', icon: '🎨', link: 'activities.html#activity9' },
+                { title: '3D Shapes', description: 'Explore 3D shapes', icon: '📦', link: 'activities.html#activity10' }
+            ],
+            lessons: [
+                { title: 'Basic Shapes Introduction', description: 'Learn about basic shapes', icon: '📚', link: 'learn.html#basics' },
+                { title: 'Shape Properties', description: 'Understand shape properties', icon: '📐', link: 'learn.html#properties' },
+                { title: 'Geometric Patterns', description: 'Explore patterns in shapes', icon: '🔄', link: 'learn.html#patterns' },
+                { title: '2D Shapes', description: 'Learn about flat shapes', icon: '⭕', link: 'learn.html#2d' },
+                { title: '3D Shapes', description: 'Explore three-dimensional shapes', icon: '📦', link: 'learn.html#3d' }
+            ]
+        };
+
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (searchInput.length < 2) {
+                resultsContainer.classList.remove('active');
+                return;
+            }
+
+            let resultsHtml = '';
+            let resultsFound = false;
+
+            // Search through all categories
+            for (const category in searchableContent) {
+                const matchingItems = searchableContent[category].filter(item => 
+                    item.title.toLowerCase().includes(searchInput) || 
+                    item.description.toLowerCase().includes(searchInput)
+                );
+
+                matchingItems.forEach(item => {
+                    resultsFound = true;
+                    resultsHtml += `
+                        <a href="${item.link}" class="result-item">
+                            <div class="result-icon">${item.icon}</div>
+                            <div class="result-content">
+                                <div class="result-title">${item.title}</div>
+                                <div class="result-category">${category.charAt(0).toUpperCase() + category.slice(1)} - ${item.description}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+
+            if (!resultsFound) {
+                resultsHtml = '<div class="no-results">No matching content found. Try different keywords!</div>';
+            }
+
+            resultsContainer.innerHTML = resultsHtml;
+            resultsContainer.classList.add('active');
+        }
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(event) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResults = document.getElementById('searchResults');
+            
+            if (!searchContainer.contains(event.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

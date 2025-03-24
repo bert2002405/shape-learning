@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Authors</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .authors-hero {
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .author-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .author-card:hover {
+            transform: translateY(-10px);
+        }
+        .author-initial {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .author-name {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Shape Learning</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="learn.html">Learn</a>
+                <a href="activities.html">Activities</a>
+                <a href="authors.html" class="active">Authors</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="authors-hero">
+        <h1>Our Authors</h1>
+    </div>
+
+    <main>
+        <div class="authors-grid">
+            <div class="author-card">
+                <div class="author-initial">AR</div>
+                <h2 class="author-name">Allen Jyn Rimando</h2>
+            </div>
+
+            <div class="author-card">
+                <div class="author-initial">AP</div>
+                <h2 class="author-name">Alecksza L. Prestoza</h2>
+            </div>
+
+            <div class="author-card">
+                <div class="author-initial">ES</div>
+                <h2 class="author-name">Elgene D. Sumalinab</h2>
+            </div>
+
+            <div class="author-card">
+                <div class="author-initial">JO</div>
+                <h2 class="author-name">James Olea</h2>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p> 2025 Shape Learning Adventure</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
