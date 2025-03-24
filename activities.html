@@ -259,9 +259,9 @@
                     <h3>Shape Angles Counter</h3>
                 </div>
                 <p>How many angles does this shape have?</p>
-                <div class="shape pentagon"></div>
+                <div class="shape square"></div>
                 <input type="number" class="shape-input" min="0" max="10" id="angleInput">
-                <button class="check-button" onclick="checkAngles(5)">Check Answer</button>
+                <button class="check-button" onclick="checkAngles(4)">Check Answer</button>
                 <p class="result-message" id="result7"></p>
             </div>
 
@@ -343,7 +343,8 @@
         }
 
         // Shape Identification Activity
-        const shapes = ['circle', 'square', 'triangle', 'rectangle', 'pentagon'];
+        const shapes = ['circle', 'square', 'triangle', 'rectangle'];
+        
         const shapeDisplay = document.getElementById('shape-display');
         
         shapes.forEach(shape => {
